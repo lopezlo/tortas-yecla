@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle } from 'lucide-react';
 import RatingControl from './RatingControl';
 import ReviewModal from './ReviewModal';
@@ -23,10 +23,15 @@ const defaultScores: ScoreState = {
 };
 
 export default function EvaluationForm({ restaurants }: EvaluationFormProps) {
-  const today = new Date().toISOString().split('T')[0];
-
+  const [today, setToday] = useState('');
   const [restaurantId, setRestaurantId] = useState('');
-  const [visitDate, setVisitDate] = useState(today);
+  const [visitDate, setVisitDate] = useState('');
+
+  useEffect(() => {
+    const d = new Date().toISOString().split('T')[0];
+    setToday(d);
+    setVisitDate(d);
+  }, []);
   const [scores, setScores] = useState<ScoreState>(defaultScores);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showReview, setShowReview] = useState(false);

@@ -1,5 +1,6 @@
 'use server';
 
+import { randomUUID } from 'crypto';
 import { db } from '@/lib/db';
 import {
   restaurants,
@@ -155,6 +156,7 @@ export async function submitEvaluation(data: EvaluationInput) {
     .limit(1);
 
   await db.insert(evaluations).values({
+    id: randomUUID(),
     restaurantId: data.restaurantId,
     visitDate: new Date(data.visitDate),
     sizeScore: data.sizeScore,
